@@ -37,14 +37,6 @@ const EngagementStats = ({ stats }) => {
           </span>
         </div>
 
-        {/* Total Views */}
-        <div className="flex justify-between items-center border-b border-gray-700 pb-3">
-          <span className="font-semibold">📺 Total Views:</span>
-          <span className="text-purple-400 font-bold text-lg sm:text-xl">
-            {totalViews.toLocaleString()}
-          </span>
-        </div>
-
         {/* Likes-to-Views Ratio */}
         <div className="flex justify-between items-center border-b border-gray-700 pb-3">
           <span className="font-semibold">🔥 Likes-to-Views Ratio:</span>

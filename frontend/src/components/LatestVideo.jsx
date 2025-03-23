@@ -23,7 +23,7 @@ const LatestVideo = ({ video }) => {
           <img
             src={video.thumbnail}
             alt="Latest Video Thumbnail"
-            className="w-full max-w-sm h-auto rounded-lg shadow-lg border border-gray-700 transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
+            className="w-full max-w-sm h-auto rounded-lg shadow-lg border border-gray-700  hover:shadow-xl cursor-pointer"
             onClick={handleThumbnailClick}
           />
         )}

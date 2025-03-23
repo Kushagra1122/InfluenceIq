@@ -8,19 +8,32 @@ const calculateInfluencerScore = (data) => {
   const logBase10 = (num) => Math.log10(Math.max(num, 1));
 
   const subscriberScore = Math.min(
-    (logBase10(data.channelStats.subscriberCount + 1) / logBase10(10_000_000)) * 40,
+    (logBase10(data.channelStats.subscriberCount + 1) / logBase10(10_000_000)) *
+      40,
     40
   );
-  const totalVideosScore = Math.min((data.channelStats.videoCount / 1200) * 20, 20);
-  const totalViewsScore = Math.min(
-    (logBase10(data.channelStats.viewCount + 1) / logBase10(1_000_000_000)) * 20,
+  const totalVideosScore = Math.min(
+    (data.channelStats.videoCount / 1200) * 20,
     20
   );
-  const searchVolumeScore = Math.min((data.computedStats.totalSearchVolume / 2000) * 20, 20);
+  const totalViewsScore = Math.min(
+    (logBase10(data.channelStats.viewCount + 1) / logBase10(1_000_000_000)) *
+      20,
+    20
+  );
+  const searchVolumeScore = Math.min(
+    (data.computedStats.totalSearchVolume / 2000) * 20,
+    20
+  );
 
-  const C = 0.4 * (subscriberScore + totalVideosScore + totalViewsScore + searchVolumeScore);
+  const C =
+    0.4 *
+    (subscriberScore + totalVideosScore + totalViewsScore + searchVolumeScore);
 
-  const videoUploadScore = Math.min((data.channelStats.videoCount / 2000) * 40, 40);
+  const videoUploadScore = Math.min(
+    (data.channelStats.videoCount / 2000) * 40,
+    40
+  );
   const engagementOverTimeScore = Math.min(
     (logBase10(data.computedStats.avgViews + 1) / logBase10(500_000)) * 40,
     40
@@ -34,10 +47,14 @@ const calculateInfluencerScore = (data) => {
       ? data.computedStats.avgLikes / data.computedStats.avgViews
       : 0;
   const normalizedEngagementRate = Math.min((engagementRate / 0.02) * 50, 50);
-  const avgCommentsScore = Math.min((data.computedStats.avgComments / 700) * 30, 30);
+  const avgCommentsScore = Math.min(
+    (data.computedStats.avgComments / 700) * 30,
+    30
+  );
   const latestLikesScore = Math.min((data.latestVideo.likes / 15_000) * 20, 20);
 
-  const M = 0.3 * (normalizedEngagementRate + avgCommentsScore + latestLikesScore);
+  const M =
+    0.3 * (normalizedEngagementRate + avgCommentsScore + latestLikesScore);
 
   const finalScore = parseFloat((C + F + M).toFixed(2));
 
@@ -55,31 +72,11 @@ import { useState } from "react";
 
 const InfluencerScore = ({ stats }) => {
   const { finalScore, rating } = calculateInfluencerScore(stats);
-  const [showInfo, setShowInfo] = useState(false);
-
-  const handleMouseEnter = () => setShowInfo(true);
-  const handleMouseLeave = () => setShowInfo(false);
 
   return (
     <div className="flex flex-col md:flex-row justify-center items-center gap-8 m-10">
       {/* Left Side: Score Display */}
-      <div
-        className="bg-gray-900 bg-opacity-80 p-8 rounded-2xl shadow-xl border border-gray-700 transition-transform transform hover:scale-105 hover:shadow-2xl w-full md:w-1/2 text-center relative"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        {/* Info Button */}
-        {showInfo && (
-          <button
-            className="absolute top-2 right-2 text-white text-xl bg-yellow-500 rounded-full p-2 hover:bg-yellow-400 transition-all"
-            onClick={() =>
-              alert("Additional Information: Influencer Score breakdown")
-            }
-          >
-            ℹ️
-          </button>
-        )}
-
+      <div className="bg-gray-900 bg-opacity-80 p-8 rounded-2xl shadow-xl border border-gray-700 transition-transform transform hover:scale-105 hover:shadow-2xl w-full md:w-1/2 text-center relative">
         <h2 className="text-3xl font-extrabold text-[#85b50b] mb-6 drop-shadow-lg">
           Influencer Score
         </h2>
@@ -89,12 +86,6 @@ const InfluencerScore = ({ stats }) => {
         <p className="text-xl font-semibold text-yellow-400">{rating}</p>
       </div>
 
-      {/* Right Side: Score Interpretation */}
-      {
-        showInfo?
-            <></>:<></>
-        
-      }
       <div className="bg-gray-900 bg-opacity-80 p-6 rounded-2xl shadow-xl border  border-gray-700 hover:shadow-2xl w-full md:w-1/2">
         <h2 className="text-2xl font-extrabold text-[#85b50b] mb-4 drop-shadow-lg text-center">
           Score Interpretation
@@ -157,4 +148,3 @@ const InfluencerScore = ({ stats }) => {
 };
 
 export default InfluencerScore;
-

@@ -29,7 +29,6 @@ const stats =  async (req, res) => {
         const channelName = channelInfo.data.items?.[0]?.snippet?.title || "Unknown Channel";
 
         const computedStats = await calculateStats(channelStats, videoStats, channelName);
-        console.log({ channelStats, computedStats, videoStats, latestVideo });
         res.json({ channelStats, computedStats, videoStats, latestVideo });
 
     } catch (error) {

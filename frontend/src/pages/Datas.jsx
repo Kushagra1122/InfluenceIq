@@ -20,7 +20,7 @@ const Datas = () => {
     try {
       let cleanedUrl = url.trim().split("?")[0]; // Remove query params
       const encodedUrl = encodeURIComponent(cleanedUrl);
-      const finalUrl = `http://localhost:9000/api/youtube/channel-stats?channelUrl=${encodedUrl}`;
+      const finalUrl = `https://influenceiq-gasa.onrender.com/api/youtube/channel-stats?channelUrl=${encodedUrl}`;
 
       const response = await axios.get(finalUrl);
       setStats(response.data);
